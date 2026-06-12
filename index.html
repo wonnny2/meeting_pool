@@ -342,7 +342,7 @@
       3. 지역 <span>(예: 서울 마포구)</span><br>
       4. 학력 <span>(고졸 / 전문대 / 4년제 / 대학원)</span><br>
       5. 회사 / 직업<br>
-      6. 사진 교환 여부 <span>(가능 / 필요 / 자유)</span><br>
+      6. 사진 교환 여부 <span>(필요 / 필요X)</span><br>
       7. 이상형 <span>(나이, 키, 성격, 직업 등 자유롭게)</span><br>
       8. 자기소개 <span>(3줄 이내)</span><br>
       9. 특이사항 <span>(자차, 반려동물 등 선택)</span>
@@ -385,9 +385,8 @@
   </select>
   <select id="filterPhoto" onchange="applyFilter()">
     <option value="">사진 전체</option>
-    <option value="가능">사진 교환 가능</option>
     <option value="필요">사진 교환 필요</option>
-    <option value="자유">자유</option>
+    <option value="필요X">사진 교환 필요X</option>
   </select>
   <div class="count-badge" id="countBadge"></div>
 </div>
