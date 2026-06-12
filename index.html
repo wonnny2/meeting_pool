@@ -277,17 +277,16 @@
     font-size: 13px; color: var(--text-secondary); line-height: 1.6;
   }
 
-  .intro-box {
-    background: var(--bg);
-    border-radius: 10px;
-    padding: 12px 14px;
-    font-size: 13px;
-    color: var(--text-primary);
-    line-height: 1.8;
-    border-left: 3px solid var(--border);
+  .intro-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .intro-tag {
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      background: #FDF4F6;
+      color: #B5466A;
   }
-  .female .intro-box { border-left-color: var(--accent-f); background: #FDF4F6; }
-  .male   .intro-box { border-left-color: var(--accent-m); background: #F2F7FD; }
+  .male .intro-tag { background: #EBF2FB; color: #2E5F8A; }
 
   /* ── States ── */
   .state-msg {
@@ -333,25 +332,24 @@
 <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
   <div class="modal" id="modal">
     <div class="modal-title" id="modalTitle">등록 방법 안내</div>
-    <div class="modal-sub">아래 양식에 맞게 내용을 준비한 다음, 운영자에게 전달해주세요.</div>
+    <div class="modal-sub">아래 양식에 맞게 내용을 준비한 다음, 운영자에게 전달해주세요. ★ 표시는 필수입니다.</div>
 
     <div class="modal-columns">
       <b>작성 항목</b><br>
-      1. 나이 <span>(년생, 예: 94)</span><br>
-      2. 키 <span>(cm, 예: 168)</span><br>
-      3. 지역 <span>(예: 서울 마포구)</span><br>
-      4. 학력 <span>(고졸 / 전문대 / 4년제 / 대학원)</span><br>
-      5. 회사 / 직업<br>
+      1. ★나이 <span>(년생, 예: 94)</span><br>
+      2. ★키 <span>(cm, 예: 168)</span><br>
+      3. ★지역 <span>(예: 서울 마포구, 대전)</span><br>
+      4. 학력 <span>(고졸 / 전문대 / 4년제 / 석사 / 박사 등)</span><br>
+      5. ★회사 / 직업<br>
       6. 사진 교환 여부 <span>(필요 / 필요X)</span><br>
-      7. 이상형 <span>(나이, 키, 성격, 직업 등 자유롭게)</span><br>
-      8. 자기소개 <span>(3줄 이내)</span><br>
-      9. 특이사항 <span>(자차, 반려동물 등 선택)</span>
+      7. 이상형 <span></span><br>
+      8. 자기소개 <span></span><br>
     </div>
 
     <div class="modal-steps">
       <div class="step">
         <div class="step-num" id="stepNum1">1</div>
-        <div class="step-text" id="stepText1">위 항목을 채워서 <strong>운영자 카카오톡</strong>으로 보내주세요.</div>
+        <div class="step-text" id="stepText1">위 항목을 채워서 <strong>운영자에게</strong> 보내주세요.</div>
       </div>
       <div class="step">
         <div class="step-num" id="stepNum2">2</div>
@@ -359,7 +357,8 @@
       </div>
       <div class="step">
         <div class="step-num" id="stepNum3">3</div>
-        <div class="step-text">등록 후 마음에 드는 분이 있으면 <strong>운영자를 통해 연락처를 교환</strong>해요.</div>
+        <div class="step-text">등록 후 마음에 드는 분이 있으면 <strong>운영자를 통해 연락처를 교환</strong>해요.
+          (프로필 교환 - (사진 교환) - 연락처 교환 순서)</div>
       </div>
     </div>
 
@@ -513,7 +512,9 @@ function photoBadge(val) {
         ${p.intro ? `
           <div class="divider"></div>
           <div class="section-label">자기소개</div>
-          <div class="intro-box">${p.intro}</div>
+          <div class="intro-tags">
+            ${p.intro.split(/[\/,]/).map(s => s.trim()).filter(Boolean).map(t => `<span class="intro-tag">${t}</span>`).join('')}
+          </div>
         ` : ''}
       </div>`;
     }).join('');
