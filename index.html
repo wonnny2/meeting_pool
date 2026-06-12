@@ -277,7 +277,17 @@
     font-size: 13px; color: var(--text-secondary); line-height: 1.6;
   }
 
-  .intro-text { font-size: 13px; color: var(--text-primary); line-height: 1.7; }
+  .intro-box {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--text-primary);
+    line-height: 1.8;
+    border-left: 3px solid var(--border);
+  }
+  .female .intro-box { border-left-color: var(--accent-f); background: #FDF4F6; }
+  .male   .intro-box { border-left-color: var(--accent-m); background: #F2F7FD; }
 
   /* ── States ── */
   .state-msg {
@@ -506,7 +516,7 @@
         ${p.intro ? `
           <div class="divider"></div>
           <div class="section-label">자기소개</div>
-          <div class="intro-text">${p.intro}</div>
+          <div class="intro-box">${p.intro}</div>
         ` : ''}
       </div>`;
     }).join('');
