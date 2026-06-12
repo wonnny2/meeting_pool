@@ -23,284 +23,180 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Noto Sans KR', sans-serif;
-    background: var(--bg);
-    color: var(--text-primary);
-    min-height: 100vh;
-  }
+  body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text-primary); min-height: 100vh; }
 
   /* ── Header ── */
   header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 20px 32px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    padding: 20px 32px; display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
   }
-  .logo {
-    font-size: 20px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    color: var(--text-primary);
-  }
+  .logo { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; color: var(--text-primary); }
   .logo .dot { color: var(--accent-f); }
   .last-updated { font-size: 12px; color: var(--text-muted); }
 
-  /* ── Tab + Register ── */
-  .tab-wrap {
-    display: flex;
-    gap: 8px;
-    padding: 28px 32px 0;
-    max-width: 1200px;
-    margin: 0 auto;
-    align-items: center;
-  }
+  /* ── Tab ── */
+  .tab-wrap { display: flex; gap: 8px; padding: 28px 32px 0; max-width: 1200px; margin: 0 auto; align-items: center; }
   .tab-btn {
-    padding: 10px 28px;
-    border-radius: 100px;
-    border: 2px solid var(--border);
-    background: var(--surface);
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-    color: var(--text-secondary);
-    font-family: inherit;
+    padding: 10px 28px; border-radius: 100px; border: 2px solid var(--border);
+    background: var(--surface); font-size: 15px; font-weight: 500; cursor: pointer;
+    transition: all 0.2s; color: var(--text-secondary); font-family: inherit;
   }
   .tab-btn.active-f { background: var(--accent-f); border-color: var(--accent-f); color: white; }
   .tab-btn.active-m { background: var(--accent-m); border-color: var(--accent-m); color: white; }
-
   .register-btn {
-    padding: 9px 18px;
-    border-radius: 100px;
-    border: 1.5px dashed var(--border);
-    background: transparent;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    color: var(--text-muted);
-    font-family: inherit;
-    transition: all 0.2s;
+    padding: 9px 18px; border-radius: 100px; border: 1.5px dashed var(--border);
+    background: transparent; font-size: 13px; font-weight: 500; cursor: pointer;
+    color: var(--text-muted); font-family: inherit; transition: all 0.2s;
   }
   .register-btn:hover { border-color: var(--accent-f); color: var(--accent-f); }
 
-  /* ── Modal ── */
+  /* ── 등록 모달 ── */
   .modal-overlay {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.45);
-    z-index: 200;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+    z-index: 200; align-items: center; justify-content: center; padding: 20px;
   }
   .modal-overlay.open { display: flex; }
   .modal {
-    background: var(--surface);
-    border-radius: 20px;
-    padding: 32px;
-    max-width: 480px;
-    width: 100%;
-    max-height: 80vh;
-    overflow-y: auto;
+    background: var(--surface); border-radius: 20px; padding: 32px;
+    max-width: 480px; width: 100%; max-height: 80vh; overflow-y: auto;
     box-shadow: 0 20px 60px rgba(0,0,0,0.2);
   }
-  .modal-title {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 6px;
-  }
-  .modal-sub {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: 24px;
-    line-height: 1.6;
-  }
-  .modal-sub a {
-    color: var(--accent-f);
-    font-weight: 600;
-    text-decoration: none;
-  }
+  .modal-title { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+  .modal-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.6; }
   .modal-steps { display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
-  .step {
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-  }
+  .step { display: flex; gap: 14px; align-items: flex-start; }
   .step-num {
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    background: #FDEEF2;
-    color: var(--accent-f);
-    font-size: 13px;
-    font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    margin-top: 1px;
+    width: 28px; height: 28px; border-radius: 50%; background: #FDEEF2; color: var(--accent-f);
+    font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
   }
-  .step-num.blue { background: #EBF2FB; color: var(--accent-m); }
   .step-text { font-size: 14px; line-height: 1.7; color: var(--text-secondary); }
   .step-text strong { color: var(--text-primary); font-weight: 600; }
   .modal-columns {
-    background: var(--bg);
-    border-radius: 12px;
-    padding: 16px;
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.9;
-    margin-bottom: 24px;
+    background: var(--bg); border-radius: 12px; padding: 16px;
+    font-size: 13px; color: var(--text-secondary); line-height: 1.9; margin-bottom: 24px;
   }
   .modal-columns span { color: var(--text-muted); font-size: 12px; margin-left: 4px; }
   .modal-close {
-    width: 100%;
-    padding: 12px;
-    border-radius: 12px;
-    border: none;
-    background: var(--accent-f);
-    color: white;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: inherit;
+    width: 100%; padding: 12px; border-radius: 12px; border: none;
+    background: var(--accent-f); color: white; font-size: 15px; font-weight: 600;
+    cursor: pointer; font-family: inherit;
   }
-  .modal-close.blue { background: var(--accent-m); }
+
+  /* ── 상세 모달 ── */
+  .detail-modal {
+    background: var(--surface); border-radius: 20px; padding: 32px;
+    max-width: 520px; width: 100%; max-height: 85vh; overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2); position: relative;
+  }
+  .detail-close {
+    position: absolute; top: 16px; right: 16px;
+    width: 32px; height: 32px; border-radius: 50%; border: none;
+    background: var(--tag-bg); color: var(--text-secondary); font-size: 16px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+  }
+  .detail-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .detail-num {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 700; flex-shrink: 0;
+  }
+  .detail-num.f { background: #FDEEF2; color: var(--accent-f); }
+  .detail-num.m { background: #EBF2FB; color: var(--accent-m); }
+  .detail-name { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
+  .detail-height { font-size: 15px; color: var(--text-secondary); margin-left: 4px; }
+  .detail-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+  .detail-tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 5px 12px; background: var(--tag-bg);
+    border-radius: 8px; font-size: 13px; color: var(--text-secondary);
+  }
+  .detail-section { margin-bottom: 20px; }
+  .detail-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+    color: var(--text-muted); margin-bottom: 8px;
+  }
+  .ideal-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .ideal-tag { padding: 5px 12px; border-radius: 8px; font-size: 13px; background: #F0EBF8; color: #6B4FA0; font-weight: 500; }
+  .intro-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .intro-tag { padding: 5px 12px; border-radius: 8px; font-size: 13px; font-weight: 500; background: #FDF4F6; color: #B5466A; }
+  .male-detail .intro-tag { background: #EBF2FB; color: #2E5F8A; }
+  .photo-badge { font-size: 11px; padding: 3px 9px; border-radius: 100px; font-weight: 500; }
+  .photo-need { background: #FFF3E0; color: #E65100; }
 
   /* ── Filter bar ── */
   .filter-bar {
-    padding: 16px 32px;
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    align-items: center;
+    padding: 16px 32px; max-width: 1200px; margin: 0 auto;
+    display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
   }
-  .filter-bar input,
-  .filter-bar select {
-    padding: 9px 14px;
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    font-size: 13px;
-    font-family: inherit;
-    background: var(--surface);
-    color: var(--text-primary);
-    outline: none;
-    transition: border-color 0.2s;
+  .filter-bar input, .filter-bar select {
+    padding: 9px 14px; border: 1.5px solid var(--border); border-radius: 10px;
+    font-size: 13px; font-family: inherit; background: var(--surface);
+    color: var(--text-primary); outline: none; transition: border-color 0.2s;
   }
-  .filter-bar input:focus,
-  .filter-bar select:focus { border-color: var(--accent-f); }
+  .filter-bar input:focus, .filter-bar select:focus { border-color: var(--accent-f); }
   .filter-bar input { width: 180px; }
   .count-badge { margin-left: auto; font-size: 13px; color: var(--text-muted); white-space: nowrap; }
   .count-badge strong { color: var(--text-primary); font-weight: 700; }
 
-  /* ── Grid ── */
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+  /* ── 테이블 ── */
+  .table-wrap {
     padding: 8px 32px 48px;
     max-width: 1200px;
     margin: 0 auto;
+    overflow-x: auto;
   }
-
-  /* ── Card ── */
-  .card {
+  table {
+    width: 100%;
+    border-collapse: collapse;
     background: var(--surface);
     border-radius: var(--radius);
-    border: 1px solid var(--border);
-    padding: 22px;
+    overflow: hidden;
     box-shadow: var(--shadow);
-    transition: box-shadow 0.2s, transform 0.2s;
+    font-size: 14px;
   }
-  .card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
-
-  .card-top {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin-bottom: 14px;
-  }
-  .card-num {
-    width: 34px; height: 34px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 700; flex-shrink: 0;
-  }
-  .female .card-num { background: #FDEEF2; color: var(--accent-f); }
-  .male   .card-num { background: #EBF2FB; color: var(--accent-m); }
-
-  .photo-badge {
-    font-size: 11px; padding: 3px 9px;
-    border-radius: 100px; font-weight: 500;
-  }
-  .photo-yes  { background: #E8F5E9; color: #388E3C; }
-  .photo-need { background: #FFF3E0; color: #E65100; }
-  .photo-free { background: var(--tag-bg); color: var(--text-muted); }
-
-  .card-name-row {
-    display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px;
-  }
-  .card-year { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
-  .card-height { font-size: 14px; color: var(--text-secondary); }
-
-  .card-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
-  .tag {
-    display: inline-flex; align-items: center; gap: 4px;
-    padding: 4px 10px; background: var(--tag-bg);
-    border-radius: 8px; font-size: 12px; color: var(--text-secondary);
-  }
-
-  .divider { height: 1px; background: var(--border); margin: 14px 0; }
-
-  .section-label {
+  thead tr { background: var(--bg); border-bottom: 2px solid var(--border); }
+  thead th {
+    padding: 12px 16px; text-align: left;
     font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
-    color: var(--text-muted); margin-bottom: 8px;
+    color: var(--text-muted); white-space: nowrap;
   }
-
-  /* 이상형 태그형 */
-  .ideal-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-  .ideal-tag {
-    padding: 4px 10px;
-    border-radius: 8px;
-    font-size: 12px;
-    background: #F0EBF8;
-    color: #6B4FA0;
-    font-weight: 500;
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    cursor: pointer; transition: background 0.15s;
   }
-  .ideal-tag-plain {
-    font-size: 13px; color: var(--text-secondary); line-height: 1.6;
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #FDF4F6; }
+  .male-row:hover { background: #F0F6FC; }
+  tbody td { padding: 12px 16px; vertical-align: middle; }
+  .td-num { font-size: 12px; font-weight: 700; color: var(--text-muted); width: 36px; }
+  .td-num.f { color: var(--accent-f); }
+  .td-num.m { color: var(--accent-m); }
+  .td-main { font-weight: 600; font-size: 15px; white-space: nowrap; }
+  .td-sub { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+  .td-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+  .row-tag {
+    padding: 3px 8px; border-radius: 6px; font-size: 11px;
+    background: var(--tag-bg); color: var(--text-secondary);
   }
-
-  .intro-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-  .intro-tag {
-      padding: 4px 10px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 500;
-      background: #FDF4F6;
-      color: #B5466A;
+  .row-tag.purple { background: #F0EBF8; color: #6B4FA0; }
+  .more-tag {
+    padding: 3px 8px; border-radius: 6px; font-size: 11px;
+    background: var(--border); color: var(--text-muted);
   }
-  .male .intro-tag { background: #EBF2FB; color: #2E5F8A; }
 
   /* ── States ── */
-  .state-msg {
-    grid-column: 1 / -1; text-align: center;
-    padding: 80px 20px; color: var(--text-muted); font-size: 15px;
-  }
+  .state-msg { text-align: center; padding: 80px 20px; color: var(--text-muted); font-size: 15px; }
   .state-msg .icon { font-size: 40px; margin-bottom: 12px; }
 
   /* ── Responsive ── */
   @media (max-width: 600px) {
     header { padding: 16px 20px; }
-    .tab-wrap, .filter-bar, .grid { padding-left: 16px; padding-right: 16px; }
+    .tab-wrap, .filter-bar, .table-wrap { padding-left: 16px; padding-right: 16px; }
     .filter-bar input { width: 140px; }
-    .grid { grid-template-columns: 1fr; }
+    thead th:nth-child(4), tbody td:nth-child(4),
+    thead th:nth-child(5), tbody td:nth-child(5) { display: none; }
   }
 </style>
 </head>
@@ -311,7 +207,6 @@
   const SHEET_ID     = "1y_sbJZygHscc-3PxZr0AM0ZjX05LkLZ0TTuLKAmEQIg";
   const SHEET_FEMALE = "여성";
   const SHEET_MALE   = "남성";
-  // 등록 안내 카카오톡 오픈채팅 or 구글폼 링크 (없으면 빈 문자열 '')
   const REGISTER_LINK = "";
 </script>
 <!-- ████████████████████████████████ -->
@@ -321,19 +216,17 @@
   <div class="last-updated" id="lastUpdated"></div>
 </header>
 
-<!-- 탭 + 등록 버튼 -->
 <div class="tab-wrap">
   <button class="tab-btn active-f" id="tabF" onclick="switchTab('female')">🩷 여자</button>
   <button class="tab-btn"          id="tabM" onclick="switchTab('male')"  >💙 남자</button>
-  <button class="register-btn" onclick="openModal()">+ 등록하기</button>
+  <button class="register-btn" onclick="openRegModal()">+ 등록하기</button>
 </div>
 
 <!-- 등록 안내 모달 -->
-<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
-  <div class="modal" id="modal">
-    <div class="modal-title" id="modalTitle">등록 방법 안내</div>
+<div class="modal-overlay" id="regOverlay" onclick="if(event.target===this)closeRegModal()">
+  <div class="modal">
+    <div class="modal-title">등록 방법 안내</div>
     <div class="modal-sub">아래 양식에 맞게 내용을 준비한 다음, 운영자에게 전달해주세요. ★ 표시는 필수입니다.</div>
-
     <div class="modal-columns">
       <b>작성 항목</b><br>
       1. ★나이 <span>(년생, 예: 94)</span><br>
@@ -342,27 +235,33 @@
       4. 학력 <span>(고졸 / 전문대 / 4년제 / 석사 / 박사 등)</span><br>
       5. ★회사 / 직업<br>
       6. 사진 교환 여부 <span>(필요 / 필요X)</span><br>
-      7. 이상형 <span></span><br>
-      8. 자기소개 <span></span><br>
+      7. 이상형<br>
+      8. 자기소개
     </div>
-
     <div class="modal-steps">
       <div class="step">
-        <div class="step-num" id="stepNum1">1</div>
+        <div class="step-num">1</div>
         <div class="step-text" id="stepText1">위 항목을 채워서 <strong>운영자에게</strong> 보내주세요.</div>
       </div>
       <div class="step">
-        <div class="step-num" id="stepNum2">2</div>
+        <div class="step-num">2</div>
         <div class="step-text">운영자가 확인 후 프로필을 등록해드려요. 보통 <strong>1~2일 내</strong> 반영돼요.</div>
       </div>
       <div class="step">
-        <div class="step-num" id="stepNum3">3</div>
-        <div class="step-text">등록 후 마음에 드는 분이 있으면 <strong>운영자를 통해 연락처를 교환</strong>해요.
-          (프로필 교환 - (사진 교환) - 연락처 교환 순서)</div>
+        <div class="step-num">3</div>
+        <div class="step-text">등록 후 마음에 드는 분이 있으면 <strong>운영자를 통해 연락처를 교환</strong>해요.<br>
+        (프로필 교환 → 사진 교환 → 연락처 교환)</div>
       </div>
     </div>
+    <button class="modal-close" onclick="closeRegModal()">확인했어요</button>
+  </div>
+</div>
 
-    <button class="modal-close" id="modalCloseBtn" onclick="closeModal()">확인했어요</button>
+<!-- 상세 보기 모달 -->
+<div class="modal-overlay" id="detailOverlay" onclick="if(event.target===this)closeDetail()">
+  <div class="detail-modal" id="detailModal">
+    <button class="detail-close" onclick="closeDetail()">✕</button>
+    <div id="detailContent"></div>
   </div>
 </div>
 
@@ -390,33 +289,65 @@
   <div class="count-badge" id="countBadge"></div>
 </div>
 
-<div class="grid" id="cardGrid"></div>
+<div class="table-wrap" id="tableWrap"></div>
 
 <script>
   let currentTab = 'female';
   let femaleData = [], maleData = [];
 
-  // ── Modal ──
-  function openModal() {
-    document.getElementById('modalTitle').textContent = '등록 방법 안내';
-    const nums = document.querySelectorAll('.step-num');
-    const btn  = document.getElementById('modalCloseBtn');
-    nums.forEach(n => n.className = 'step-num');
-    btn.className = 'modal-close';
-
-    if (REGISTER_LINK) {
-      document.getElementById('stepText1').innerHTML =
-        `<a href="${REGISTER_LINK}" target="_blank" style="color:var(--accent-f);font-weight:600">등록 링크</a>를 통해 바로 신청하거나, 운영자에게 직접 전달해도 돼요.`;
-    }
-    document.getElementById('modalOverlay').classList.add('open');
+  // ── 등록 모달 ──
+  function openRegModal() {
+    document.getElementById('regOverlay').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
-  function closeModal() {
-    document.getElementById('modalOverlay').classList.remove('open');
+  function closeRegModal() {
+    document.getElementById('regOverlay').classList.remove('open');
     document.body.style.overflow = '';
   }
-  function closeModalOutside(e) {
-    if (e.target === document.getElementById('modalOverlay')) closeModal();
+
+  // ── 상세 모달 ──
+  function openDetail(p, isFemale) {
+    const gc = isFemale ? 'f' : 'm';
+    const idealTags = parseTags(p.ideal);
+    const introTags = parseTags(p.intro);
+    const detailClass = isFemale ? '' : 'male-detail';
+
+    document.getElementById('detailContent').innerHTML = `
+      <div class="${detailClass}">
+        <div class="detail-header">
+          <div class="detail-num ${gc}">${p.num}</div>
+          <div>
+            <span class="detail-name">${p.year}년생</span>
+            <span class="detail-height">${p.height ? p.height + 'cm' : ''}</span>
+          </div>
+          ${p.photo === '필요' ? `<span class="photo-badge photo-need" style="margin-left:auto">📷 사진 교환 필요</span>` : ''}
+        </div>
+
+        <div class="detail-tags">
+          ${p.region  ? `<span class="detail-tag">📍 ${p.region}</span>`  : ''}
+          ${p.edu     ? `<span class="detail-tag">🎓 ${p.edu}</span>`     : ''}
+          ${p.company ? `<span class="detail-tag">💼 ${p.company}</span>` : ''}
+        </div>
+
+        ${idealTags.length > 0 ? `
+          <div class="detail-section">
+            <div class="detail-label">이상형</div>
+            <div class="ideal-tags">${idealTags.map(t=>`<span class="ideal-tag">${t}</span>`).join('')}</div>
+          </div>` : ''}
+
+        ${introTags.length > 0 ? `
+          <div class="detail-section">
+            <div class="detail-label">자기소개</div>
+            <div class="intro-tags">${introTags.map(t=>`<span class="intro-tag">${t}</span>`).join('')}</div>
+          </div>` : ''}
+      </div>`;
+
+    document.getElementById('detailOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDetail() {
+    document.getElementById('detailOverlay').classList.remove('open');
+    document.body.style.overflow = '';
   }
 
   // ── Tab ──
@@ -451,77 +382,71 @@
       return true;
     });
 
-    renderCards(filtered);
+    renderTable(filtered);
     document.getElementById('countBadge').innerHTML = `총 <strong>${filtered.length}</strong>명`;
   }
 
-  // ── 이상형 텍스트를 태그로 분리 ──
-  // '/' 또는 ',' 구분자로 나눠서 태그 배열 반환
-  function parseIdealTags(text) {
+  function parseTags(text) {
     if (!text) return [];
     return text.split(/[\/,]/).map(s => s.trim()).filter(Boolean);
   }
 
-  // ── 사진 교환 배지 ──
-function photoBadge(val) {
-    if (!val) return '';
-    const v = val.trim();
-    if (v === '필요') return `<span class="photo-badge photo-need">📷 사진 교환 필요</span>`;
-    return '';
-  }
-
-  // ── Render ──
-  function renderCards(list) {
-    const grid = document.getElementById('cardGrid');
+  // ── 테이블 렌더링 ──
+  function renderTable(list) {
+    const wrap = document.getElementById('tableWrap');
     const isFemale = currentTab === 'female';
+
     if (list.length === 0) {
-      grid.innerHTML = `<div class="state-msg"><div class="icon">🔍</div>조건에 맞는 분이 없어요</div>`;
+      wrap.innerHTML = `<div class="state-msg"><div class="icon">🔍</div>조건에 맞는 분이 없어요</div>`;
       return;
     }
-    grid.innerHTML = list.map(p => {
-      const gc = isFemale ? 'female' : 'male';
-      const idealTags = parseIdealTags(p.ideal);
 
-      return `
-      <div class="card ${gc}">
-        <div class="card-top">
-          <div class="card-num">${p.num}</div>
-          ${photoBadge(p.photo)}
-        </div>
+    const rows = list.map(p => {
+      const gc = isFemale ? 'f' : 'm';
+      const rowClass = isFemale ? '' : 'male-row';
+      const idealTags = parseTags(p.ideal);
+      // 이상형 태그 최대 3개 + 나머지 숫자
+      const visibleTags = idealTags.slice(0, 3);
+      const moreCnt = idealTags.length - 3;
 
-        <div class="card-name-row">
-          <div class="card-year">${p.year}년생</div>
-          <div class="card-height">${p.height ? p.height + 'cm' : ''}</div>
-        </div>
-
-        <div class="card-meta">
-          ${p.region  ? `<span class="tag">📍 ${p.region}</span>`  : ''}
-          ${p.edu     ? `<span class="tag">🎓 ${p.edu}</span>`     : ''}
-          ${p.company ? `<span class="tag">💼 ${p.company}</span>` : ''}
-          ${p.extra   ? `<span class="tag" style="background:#F0F7EE;color:#4CAF50">✔ ${p.extra}</span>` : ''}
-        </div>
-
-        ${idealTags.length > 0 ? `
-          <div class="divider"></div>
-          <div class="section-label">이상형</div>
-          <div class="ideal-tags">
-            ${idealTags.map(t => `<span class="ideal-tag">${t}</span>`).join('')}
+      return `<tr class="${rowClass}" onclick='openDetail(${JSON.stringify(p).replace(/'/g,"&#39;")}, ${isFemale})'>
+        <td class="td-num ${gc}">${p.num}</td>
+        <td>
+          <div class="td-main">${p.year}년생 <span style="font-size:13px;font-weight:400;color:var(--text-secondary)">${p.height ? p.height+'cm' : ''}</span></div>
+          <div class="td-sub">${p.region || ''}</div>
+        </td>
+        <td>
+          <div class="td-main" style="font-size:13px">${p.company || '-'}</div>
+          <div class="td-sub">${p.edu || ''}</div>
+        </td>
+        <td>
+          <div class="td-tags">
+            ${visibleTags.map(t=>`<span class="row-tag purple">${t}</span>`).join('')}
+            ${moreCnt > 0 ? `<span class="more-tag">+${moreCnt}</span>` : ''}
           </div>
-        ` : ''}
-
-        ${p.intro ? `
-          <div class="divider"></div>
-          <div class="section-label">자기소개</div>
-          <div class="intro-tags">
-            ${p.intro.split(/[\/,]/).map(s => s.trim()).filter(Boolean).map(t => `<span class="intro-tag">${t}</span>`).join('')}
-          </div>
-        ` : ''}
-      </div>`;
+        </td>
+        <td style="font-size:12px;color:var(--text-muted)">
+          ${p.photo === '필요' ? '📷 필요' : ''}
+        </td>
+      </tr>`;
     }).join('');
+
+    wrap.innerHTML = `
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>나이 / 지역</th>
+            <th>직장 / 학력</th>
+            <th>이상형</th>
+            <th>사진</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>`;
   }
 
   // ── Google Sheets ──
-  // 컬럼: 번호 | 나이(년생) | 키(cm) | 지역 | 학력 | 회사/직업 | 사진교환여부 | 이상형 | 자기소개 | 특이사항
   function parseRows(rows) {
     if (!rows || rows.length < 2) return [];
     return rows.slice(1).map(r => ({
@@ -552,13 +477,8 @@ function photoBadge(val) {
   }
 
   async function initData() {
-    if (SHEET_ID === '여기에_구글시트_ID_붙여넣기') {
-      document.getElementById('cardGrid').innerHTML =
-        `<div class="state-msg"><div class="icon">⚙️</div>구글 시트 ID를 설정해주세요<br><small style="font-size:12px;margin-top:8px;display:block">HTML 파일 상단 SHEET_ID 값을 교체하세요</small></div>`;
-      return;
-    }
     try {
-      document.getElementById('cardGrid').innerHTML =
+      document.getElementById('tableWrap').innerHTML =
         `<div class="state-msg"><div class="icon">⏳</div>불러오는 중...</div>`;
       const [fRows, mRows] = await Promise.all([loadSheet(SHEET_FEMALE), loadSheet(SHEET_MALE)]);
       femaleData = parseRows(fRows);
@@ -567,7 +487,7 @@ function photoBadge(val) {
       document.getElementById('lastUpdated').textContent =
         '업데이트: ' + new Date().toLocaleString('ko-KR', {month:'numeric', day:'numeric', hour:'2-digit', minute:'2-digit'});
     } catch(e) {
-      document.getElementById('cardGrid').innerHTML =
+      document.getElementById('tableWrap').innerHTML =
         `<div class="state-msg"><div class="icon">⚠️</div>데이터를 불러올 수 없어요<br><small style="font-size:12px;margin-top:8px;display:block">시트 공개 설정을 확인해주세요</small></div>`;
       console.error(e);
     }
