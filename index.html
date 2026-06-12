@@ -399,12 +399,11 @@
 
   // ── Modal ──
   function openModal() {
-    const isFemale = currentTab === 'female';
-    document.getElementById('modalTitle').textContent = (isFemale ? '🩷 여자' : '💙 남자') + ' 등록 방법 안내';
+    document.getElementById('modalTitle').textContent = '등록 방법 안내';
     const nums = document.querySelectorAll('.step-num');
     const btn  = document.getElementById('modalCloseBtn');
-    nums.forEach(n => n.className = 'step-num' + (isFemale ? '' : ' blue'));
-    btn.className = 'modal-close' + (isFemale ? '' : ' blue');
+    nums.forEach(n => n.className = 'step-num');
+    btn.className = 'modal-close';
 
     if (REGISTER_LINK) {
       document.getElementById('stepText1').innerHTML =
