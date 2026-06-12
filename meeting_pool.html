@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>소개팅 풀</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+  :root {
+    --bg: #FDF8F5;
+    --surface: #FFFFFF;
+    --accent-f: #D4607A;
+    --accent-m: #4A7FB5;
+    --text-primary: #1E1E1E;
+    --text-secondary: #6B6B6B;
+    --text-muted: #A8A8A8;
+    --border: #EDE5DC;
+    --tag-bg: #F0EBE5;
+    --shadow: 0 2px 12px rgba(0,0,0,0.07);
+    --shadow-hover: 0 6px 24px rgba(0,0,0,0.12);
+    --radius: 16px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--text-primary);
+  }
+  .logo .dot { color: var(--accent-f); }
+  .last-updated { font-size: 12px; color: var(--text-muted); }
+
+  /* ── Tab + Register ── */
+  .tab-wrap {
+    display: flex;
+    gap: 8px;
+    padding: 28px 32px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: center;
+  }
+  .tab-btn {
+    padding: 10px 28px;
+    border-radius: 100px;
+    border: 2px solid var(--border);
+    background: var(--surface);
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-secondary);
+    font-family: inherit;
+  }
+  .tab-btn.active-f { background: var(--accent-f); border-color: var(--accent-f); color: white; }
+  .tab-btn.active-m { background: var(--accent-m); border-color: var(--accent-m); color: white; }
+
+  .register-btn {
+    padding: 9px 18px;
+    border-radius: 100px;
+    border: 1.5px dashed var(--border);
+    background: transparent;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+  .register-btn:hover { border-color: var(--accent-f); color: var(--accent-f); }
+
+  /* ── Modal ── */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--surface);
+    border-radius: 20px;
+    padding: 32px;
+    max-width: 480px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  }
+  .modal-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .modal-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .modal-sub a {
+    color: var(--accent-f);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .modal-steps { display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
+  .step {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .step-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: #FDEEF2;
+    color: var(--accent-f);
+    font-size: 13px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-num.blue { background: #EBF2FB; color: var(--accent-m); }
+  .step-text { font-size: 14px; line-height: 1.7; color: var(--text-secondary); }
+  .step-text strong { color: var(--text-primary); font-weight: 600; }
+  .modal-columns {
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.9;
+    margin-bottom: 24px;
+  }
+  .modal-columns span { color: var(--text-muted); font-size: 12px; margin-left: 4px; }
+  .modal-close {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    background: var(--accent-f);
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .modal-close.blue { background: var(--accent-m); }
+
+  /* ── Filter bar ── */
+  .filter-bar {
+    padding: 16px 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter-bar input,
+  .filter-bar select {
+    padding: 9px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 13px;
+    font-family: inherit;
+    background: var(--surface);
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .filter-bar input:focus,
+  .filter-bar select:focus { border-color: var(--accent-f); }
+  .filter-bar input { width: 180px; }
+  .count-badge { margin-left: auto; font-size: 13px; color: var(--text-muted); white-space: nowrap; }
+  .count-badge strong { color: var(--text-primary); font-weight: 700; }
+
+  /* ── Grid ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 8px 32px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* ── Card ── */
+  .card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 22px;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .card-num {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; flex-shrink: 0;
+  }
+  .female .card-num { background: #FDEEF2; color: var(--accent-f); }
+  .male   .card-num { background: #EBF2FB; color: var(--accent-m); }
+
+  .photo-badge {
+    font-size: 11px; padding: 3px 9px;
+    border-radius: 100px; font-weight: 500;
+  }
+  .photo-yes  { background: #E8F5E9; color: #388E3C; }
+  .photo-need { background: #FFF3E0; color: #E65100; }
+  .photo-free { background: var(--tag-bg); color: var(--text-muted); }
+
+  .card-name-row {
+    display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px;
+  }
+  .card-year { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
+  .card-height { font-size: 14px; color: var(--text-secondary); }
+
+  .card-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 10px; background: var(--tag-bg);
+    border-radius: 8px; font-size: 12px; color: var(--text-secondary);
+  }
+
+  .divider { height: 1px; background: var(--border); margin: 14px 0; }
+
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+    color: var(--text-muted); margin-bottom: 8px;
+  }
+
+  /* 이상형 태그형 */
+  .ideal-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .ideal-tag {
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    background: #F0EBF8;
+    color: #6B4FA0;
+    font-weight: 500;
+  }
+  .ideal-tag-plain {
+    font-size: 13px; color: var(--text-secondary); line-height: 1.6;
+  }
+
+  .intro-text { font-size: 13px; color: var(--text-primary); line-height: 1.7; }
+
+  /* ── States ── */
+  .state-msg {
+    grid-column: 1 / -1; text-align: center;
+    padding: 80px 20px; color: var(--text-muted); font-size: 15px;
+  }
+  .state-msg .icon { font-size: 40px; margin-bottom: 12px; }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    header { padding: 16px 20px; }
+    .tab-wrap, .filter-bar, .grid { padding-left: 16px; padding-right: 16px; }
+    .filter-bar input { width: 140px; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ████ 설정: 여기만 수정하세요 ████ -->
+<script>
+  const SHEET_ID     = "1y_sbJZygHscc-3PxZr0AM0ZjX05LkLZ0TTuLKAmEQIg";
+  const SHEET_FEMALE = "여성";
+  const SHEET_MALE   = "남성";
+  // 등록 안내 카카오톡 오픈채팅 or 구글폼 링크 (없으면 빈 문자열 '')
+  const REGISTER_LINK = "";
+</script>
+<!-- ████████████████████████████████ -->
+
+<header>
+  <div class="logo">소개팅 풀<span class="dot">.</span></div>
+  <div class="last-updated" id="lastUpdated"></div>
+</header>
+
+<!-- 탭 + 등록 버튼 -->
+<div class="tab-wrap">
+  <button class="tab-btn active-f" id="tabF" onclick="switchTab('female')">🩷 여자</button>
+  <button class="tab-btn"          id="tabM" onclick="switchTab('male')"  >💙 남자</button>
+  <button class="register-btn" onclick="openModal()">+ 등록하기</button>
+</div>
+
+<!-- 등록 안내 모달 -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal">
+    <div class="modal-title" id="modalTitle">등록 방법 안내</div>
+    <div class="modal-sub">아래 양식에 맞게 내용을 준비한 다음, 운영자에게 전달해주세요.</div>
+
+    <div class="modal-columns">
+      <b>작성 항목</b><br>
+      1. 나이 <span>(년생, 예: 94)</span><br>
+      2. 키 <span>(cm, 예: 168)</span><br>
+      3. 지역 <span>(예: 서울 마포구)</span><br>
+      4. 학력 <span>(고졸 / 전문대 / 4년제 / 대학원)</span><br>
+      5. 회사 / 직업<br>
+      6. 사진 교환 여부 <span>(가능 / 필요 / 자유)</span><br>
+      7. 이상형 <span>(나이, 키, 성격, 직업 등 자유롭게)</span><br>
+      8. 자기소개 <span>(3줄 이내)</span><br>
+      9. 특이사항 <span>(자차, 반려동물 등 선택)</span>
+    </div>
+
+    <div class="modal-steps">
+      <div class="step">
+        <div class="step-num" id="stepNum1">1</div>
+        <div class="step-text" id="stepText1">위 항목을 채워서 <strong>운영자 카카오톡</strong>으로 보내주세요.</div>
+      </div>
+      <div class="step">
+        <div class="step-num" id="stepNum2">2</div>
+        <div class="step-text">운영자가 확인 후 프로필을 등록해드려요. 보통 <strong>1~2일 내</strong> 반영돼요.</div>
+      </div>
+      <div class="step">
+        <div class="step-num" id="stepNum3">3</div>
+        <div class="step-text">등록 후 마음에 드는 분이 있으면 <strong>운영자를 통해 연락처를 교환</strong>해요.</div>
+      </div>
+    </div>
+
+    <button class="modal-close" id="modalCloseBtn" onclick="closeModal()">확인했어요</button>
+  </div>
+</div>
+
+<!-- 필터 -->
+<div class="filter-bar">
+  <input type="text" id="searchInput" placeholder="🔍  지역, 직장 검색..." oninput="applyFilter()">
+  <select id="filterYear" onchange="applyFilter()">
+    <option value="">나이 전체</option>
+    <option value="88,92">88~92년생</option>
+    <option value="93,96">93~96년생</option>
+    <option value="97,01">97~01년생</option>
+  </select>
+  <select id="filterHeight" onchange="applyFilter()">
+    <option value="">키 전체</option>
+    <option value="0,159">~159cm</option>
+    <option value="160,164">160~164cm</option>
+    <option value="165,169">165~169cm</option>
+    <option value="170,999">170cm+</option>
+  </select>
+  <select id="filterPhoto" onchange="applyFilter()">
+    <option value="">사진 전체</option>
+    <option value="가능">사진 교환 가능</option>
+    <option value="필요">사진 교환 필요</option>
+    <option value="자유">자유</option>
+  </select>
+  <div class="count-badge" id="countBadge"></div>
+</div>
+
+<div class="grid" id="cardGrid"></div>
+
+<script>
+  let currentTab = 'female';
+  let femaleData = [], maleData = [];
+
+  // ── Modal ──
+  function openModal() {
+    const isFemale = currentTab === 'female';
+    document.getElementById('modalTitle').textContent = (isFemale ? '🩷 여자' : '💙 남자') + ' 등록 방법 안내';
+    const nums = document.querySelectorAll('.step-num');
+    const btn  = document.getElementById('modalCloseBtn');
+    nums.forEach(n => n.className = 'step-num' + (isFemale ? '' : ' blue'));
+    btn.className = 'modal-close' + (isFemale ? '' : ' blue');
+
+    if (REGISTER_LINK) {
+      document.getElementById('stepText1').innerHTML =
+        `<a href="${REGISTER_LINK}" target="_blank" style="color:var(--accent-f);font-weight:600">등록 링크</a>를 통해 바로 신청하거나, 운영자에게 직접 전달해도 돼요.`;
+    }
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  }
+
+  // ── Tab ──
+  function switchTab(tab) {
+    currentTab = tab;
+    document.getElementById('tabF').className = 'tab-btn' + (tab==='female' ? ' active-f' : '');
+    document.getElementById('tabM').className = 'tab-btn' + (tab==='male'   ? ' active-m' : '');
+    applyFilter();
+  }
+
+  // ── Filter ──
+  function applyFilter() {
+    const q      = document.getElementById('searchInput').value.trim().toLowerCase();
+    const yRange = document.getElementById('filterYear').value;
+    const hRange = document.getElementById('filterHeight').value;
+    const photo  = document.getElementById('filterPhoto').value;
+    const data   = currentTab === 'female' ? femaleData : maleData;
+
+    const filtered = data.filter(p => {
+      if (q && !`${p.region}${p.company}${p.edu}${p.intro}${p.ideal}`.toLowerCase().includes(q)) return false;
+      if (yRange) {
+        const [yMin, yMax] = yRange.split(',').map(Number);
+        const y = Number(p.year);
+        if (y < yMin || y > yMax) return false;
+      }
+      if (hRange) {
+        const [hMin, hMax] = hRange.split(',').map(Number);
+        const h = Number(p.height);
+        if (h < hMin || h > hMax) return false;
+      }
+      if (photo && p.photo !== photo) return false;
+      return true;
+    });
+
+    renderCards(filtered);
+    document.getElementById('countBadge').innerHTML = `총 <strong>${filtered.length}</strong>명`;
+  }
+
+  // ── 이상형 텍스트를 태그로 분리 ──
+  // '/' 또는 ',' 구분자로 나눠서 태그 배열 반환
+  function parseIdealTags(text) {
+    if (!text) return [];
+    return text.split(/[\/,]/).map(s => s.trim()).filter(Boolean);
+  }
+
+  // ── 사진 교환 배지 ──
+  function photoBadge(val) {
+    if (!val) return '';
+    const v = val.trim();
+    if (v === '가능' || v === 'Y' || v === '있음') return `<span class="photo-badge photo-yes">📷 사진 교환 가능</span>`;
+    if (v === '필요') return `<span class="photo-badge photo-need">📷 사진 교환 필요</span>`;
+    return `<span class="photo-badge photo-free">사진 자유</span>`;
+  }
+
+  // ── Render ──
+  function renderCards(list) {
+    const grid = document.getElementById('cardGrid');
+    const isFemale = currentTab === 'female';
+    if (list.length === 0) {
+      grid.innerHTML = `<div class="state-msg"><div class="icon">🔍</div>조건에 맞는 분이 없어요</div>`;
+      return;
+    }
+    grid.innerHTML = list.map(p => {
+      const gc = isFemale ? 'female' : 'male';
+      const idealTags = parseIdealTags(p.ideal);
+
+      return `
+      <div class="card ${gc}">
+        <div class="card-top">
+          <div class="card-num">${p.num}</div>
+          ${photoBadge(p.photo)}
+        </div>
+
+        <div class="card-name-row">
+          <div class="card-year">${p.year}년생</div>
+          <div class="card-height">${p.height ? p.height + 'cm' : ''}</div>
+        </div>
+
+        <div class="card-meta">
+          ${p.region  ? `<span class="tag">📍 ${p.region}</span>`  : ''}
+          ${p.edu     ? `<span class="tag">🎓 ${p.edu}</span>`     : ''}
+          ${p.company ? `<span class="tag">💼 ${p.company}</span>` : ''}
+          ${p.extra   ? `<span class="tag" style="background:#F0F7EE;color:#4CAF50">✔ ${p.extra}</span>` : ''}
+        </div>
+
+        ${idealTags.length > 0 ? `
+          <div class="divider"></div>
+          <div class="section-label">이상형</div>
+          <div class="ideal-tags">
+            ${idealTags.map(t => `<span class="ideal-tag">${t}</span>`).join('')}
+          </div>
+        ` : ''}
+
+        ${p.intro ? `
+          <div class="divider"></div>
+          <div class="section-label">자기소개</div>
+          <div class="intro-text">${p.intro}</div>
+        ` : ''}
+      </div>`;
+    }).join('');
+  }
+
+  // ── Google Sheets ──
+  // 컬럼: 번호 | 나이(년생) | 키(cm) | 지역 | 학력 | 회사/직업 | 사진교환여부 | 이상형 | 자기소개 | 특이사항
+  function parseRows(rows) {
+    if (!rows || rows.length < 2) return [];
+    return rows.slice(1).map(r => ({
+      num    : r[0] || '',
+      year   : r[1] || '',
+      height : r[2] || '',
+      region : r[3] || '',
+      edu    : r[4] || '',
+      company: r[5] || '',
+      photo  : r[6] || '',
+      ideal  : r[7] || '',
+      intro  : r[8] || '',
+      extra  : r[9] || '',
+    })).filter(p => p.year);
+  }
+
+  async function loadSheet(sheetName) {
+    const url  = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
+    const res  = await fetch(url);
+    const text = await res.text();
+    const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
+    const rows = json.table.rows.map(row =>
+      json.table.cols.map((_, i) => {
+        const cell = row.c[i];
+        return cell && cell.v !== null ? String(cell.v) : '';
+      })
+    );
+    return [json.table.cols.map(c => c.label), ...rows];
+  }
+
+  async function initData() {
+    if (SHEET_ID === '여기에_구글시트_ID_붙여넣기') {
+      document.getElementById('cardGrid').innerHTML =
+        `<div class="state-msg"><div class="icon">⚙️</div>구글 시트 ID를 설정해주세요<br><small style="font-size:12px;margin-top:8px;display:block">HTML 파일 상단 SHEET_ID 값을 교체하세요</small></div>`;
+      return;
+    }
+    try {
+      document.getElementById('cardGrid').innerHTML =
+        `<div class="state-msg"><div class="icon">⏳</div>불러오는 중...</div>`;
+      const [fRows, mRows] = await Promise.all([loadSheet(SHEET_FEMALE), loadSheet(SHEET_MALE)]);
+      femaleData = parseRows(fRows);
+      maleData   = parseRows(mRows);
+      applyFilter();
+      document.getElementById('lastUpdated').textContent =
+        '업데이트: ' + new Date().toLocaleString('ko-KR', {month:'numeric', day:'numeric', hour:'2-digit', minute:'2-digit'});
+    } catch(e) {
+      document.getElementById('cardGrid').innerHTML =
+        `<div class="state-msg"><div class="icon">⚠️</div>데이터를 불러올 수 없어요<br><small style="font-size:12px;margin-top:8px;display:block">시트 공개 설정을 확인해주세요</small></div>`;
+      console.error(e);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', initData);
+</script>
+</body>
+</html>
