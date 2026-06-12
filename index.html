@@ -469,9 +469,7 @@
   function photoBadge(val) {
     if (!val) return '';
     const v = val.trim();
-    if (v === '가능' || v === 'Y' || v === '있음') return `<span class="photo-badge photo-yes">📷 사진 교환 가능</span>`;
     if (v === '필요') return `<span class="photo-badge photo-need">📷 사진 교환 필요</span>`;
-    return `<span class="photo-badge photo-free">사진 자유</span>`;
   }
 
   // ── Render ──
