@@ -406,9 +406,9 @@
       const gc = isFemale ? 'f' : 'm';
       const rowClass = isFemale ? '' : 'male-row';
       const idealTags = parseTags(p.ideal);
-      // 이상형 태그 최대 3개 + 나머지 숫자
-      const visibleTags = idealTags.slice(0, 3);
-      const moreCnt = idealTags.length - 3;
+      const introTags = parseTags(p.intro);
+      const visibleTags = introTags.slice(0, 3);
+      const moreCnt = introTags.length - 3;
 
       return `<tr class="${rowClass}" onclick='openDetail(${JSON.stringify(p).replace(/'/g,"&#39;")}, ${isFemale})'>
         <td class="td-num ${gc}">${p.num}</td>
@@ -422,7 +422,7 @@
         </td>
         <td>
           <div class="td-tags">
-            ${visibleTags.map(t=>`<span class="row-tag purple">${t}</span>`).join('')}
+            ${visibleTags.map(t=>`<span class="row-tag">${t}</span>`).join('')}
             ${moreCnt > 0 ? `<span class="more-tag">+${moreCnt}</span>` : ''}
           </div>
         </td>
@@ -440,7 +440,7 @@
             <th>#</th>
             <th>나이 / 지역</th>
             <th>직장 / 학력</th>
-            <th>이상형</th>
+            <th>자기소개</th>
             <th>사진</th>
           </tr>
         </thead>
