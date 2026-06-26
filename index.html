@@ -176,6 +176,7 @@
   .td-main { font-weight: 600; font-size: 14px; white-space: nowrap; }
   .td-sub { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
   .td-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+  .photo-cell { white-space: nowrap; }
   .row-tag {
     padding: 3px 8px; border-radius: 6px; font-size: 11px;
     background: var(--tag-bg); color: var(--text-secondary);
@@ -425,7 +426,7 @@
             ${moreCnt > 0 ? `<span class="more-tag">+${moreCnt}</span>` : ''}
           </div>
         </td>
-        <td style="font-size:12px;color:var(--text-muted)">
+        <td class="photo-cell" style="font-size:12px;color:var(--text-muted)">
           ${p.photo === '필요' ? '📷 필요' : ''}
         </td>
       </tr>`;
