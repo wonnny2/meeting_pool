@@ -370,9 +370,12 @@
     const filtered = data.filter(p => {
       if (q && !`${p.region}${p.company}${p.edu}${p.intro}${p.ideal}`.toLowerCase().includes(q)) return false;
       if (yRange) {
-        const [yMin, yMax] = yRange.split(',').map(Number);
-        const y = Number(p.year);
-        if (y < yMin || y > yMax) return false;
+          const [yMin, yMax] = yRange.split(',').map(Number);
+          let y = Number(p.year);
+          if (y < 10) y += 100;
+          let min = yMin, max = yMax;
+          if (max < 10) max += 100;
+          if (y < min || y > max) return false;
       }
       if (hRange) {
         const [hMin, hMax] = hRange.split(',').map(Number);
